@@ -252,7 +252,7 @@ class PlotlyArtist(_Artist):
         accumulate = False
         accumulator = {}
         for i, e in beamline_survey.iterrows():
-            if e['TYPE'].upper() not in ('QUADRUPOLE', 'SBEND', 'ELEMENT', 'RCOL', 'ECOL'):
+            if e['TYPE'].upper() not in ('QUADRUPOLE', 'SBEND', 'ELEMENT', 'RCOL', 'ECOL', 'KICKER'):
                 continue
             if i in skip_elements:
                 continue
@@ -290,6 +290,22 @@ class PlotlyArtist(_Artist):
                             'width': 0,
                         },
                         'fillcolor': '#FF0000',
+                    },
+                )
+            if e['TYPE'].upper() == 'KICKER':
+                self.shapes.append(
+                    {
+                        'type': 'rect',
+                        'xref': 'x',
+                        'yref': 'paper',
+                        'x0': e['AT_ENTRY'],
+                        'y0': vertical_position,
+                        'x1': e['AT_EXIT'],
+                        'y1': vertical_position + 0.1,
+                        'line': {
+                            'width': 0,
+                        },
+                        'fillcolor': 'Green',
                     },
                 )
             if e['TYPE'].upper() == 'SBEND':
